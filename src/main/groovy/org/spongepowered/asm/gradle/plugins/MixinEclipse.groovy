@@ -36,6 +36,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
@@ -88,12 +89,12 @@ public class MixinEclipse {
     
     static class EclipseJdtAptTask extends DefaultTask {
         @InputFile File mappingsIn
-        @Input File refmapOut = project.file("build/${name}/mixins.refmap.json")
-        @Input File mappingsOut = project.file("build/${name}/mixins.mappings.tsrg")
+        @OutputFile File refmapOut = project.file("build/${name}/mixins.refmap.json")
+        @OutputFile File mappingsOut = project.file("build/${name}/mixins.mappings.tsrg")
         @Input Map<String, String> processorOptions = new TreeMap<>()
         
-        @Input File genTestDir = project.file('build/.apt_generated_test')
-        @Input File genDir = project.file('build/.apt_generated')
+        @OutputFile File genTestDir = project.file('build/.apt_generated_test')
+        @OutputFile File genDir = project.file('build/.apt_generated')
         
         @OutputFile File output
         
@@ -156,7 +157,7 @@ public class MixinEclipse {
     }
 
     static class EclipseFactoryPath extends DefaultTask {
-        @Input Configuration config
+        @InputFiles Configuration config
         @OutputFile File output
         
         @TaskAction
