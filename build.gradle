@@ -20,13 +20,13 @@ apply plugin: 'net.minecraftforge.gradleutils'
 
 defaultTasks 'licenseFormat', 'build'
 
-ext.buildType = project.hasProperty("buildType") ? buildType : 'RELEASE'
+ext.buildType = project.hasProperty("buildType") ? buildType : 'CUSTOM'
 ext.buildNumber = project.hasProperty("buildNumber") ? buildNumber : '0'
 ext.ciSystem = project.hasProperty("ciSystem") ? ciSystem : 'unknown'
 ext.commit = project.hasProperty("commit") ? commit : 'unknown'
 
 group = 'org.spongepowered'
-version = buildType == 'SNAPSHOT' ? "$buildVersion-SNAPSHOT" : gradleutils.tagOffsetVersion
+version = "$buildVersion-$buildType"
 archivesBaseName = 'mixingradle'
 sourceCompatibility = targetCompatibility = '1.8'
 
@@ -62,7 +62,7 @@ license {
         organization = project.organization
         url = project.url
     }
-    include '**/*.groovy'
+    exclude '**/*.*'
     header file('HEADER.txt')
     sourceSets = project.sourceSets
     ignoreFailures false
